@@ -1,0 +1,60 @@
+plugins {
+	id 'groovy'
+	id 'org.springframework.boot' version '2.7.8'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.gretty' version '3.0.9'
+}
+
+apply plugin: 'war'
+apply plugin: 'idea'
+
+group = 'com.github.jvalentino'
+version = '0.0.1'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	/*
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.codehaus.groovy:groovy'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.44'
+	implementation 'javax.servlet:jstl:1.2'
+
+	runtimeOnly('org.springframework.boot:spring-boot-starter-tomcat')
+
+	 */
+	implementation 'org.codehaus.groovy:groovy'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'javax.servlet:jstl:1.2'
+	implementation 'org.springframework:spring-webmvc'
+	implementation 'org.webjars:bootstrap:5.2.0'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+/*
+sourceSets {
+	main {
+		resources {
+			srcDirs "src/main/webapp"
+		}
+	}
+}*/
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+gretty {
+	httpPort = 8080
+	contextPath = '/'
+	//servletContainer = 'jetty9.4'
+	servletContainer = 'tomcat9'
+}
