@@ -18,15 +18,20 @@ repositories {
 
 dependencies {
 
+	// Groovy
 	implementation 'org.codehaus.groovy:groovy'
 
+	// Spring Boot Magic
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// JSP Magic
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	implementation 'javax.servlet:jstl:1.2'
 	implementation 'org.springframework:spring-webmvc'
 	implementation 'org.webjars:bootstrap:5.2.0'
 
+	// DB management
 	implementation 'org.liquibase:liquibase-core'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
