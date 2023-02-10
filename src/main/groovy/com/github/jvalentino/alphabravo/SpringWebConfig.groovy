@@ -1,5 +1,6 @@
 package com.github.jvalentino.alphabravo
 
+import groovy.util.logging.Slf4j
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,11 +17,14 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(["com.github.jvalentino.alphabravo" ])
 //@EnableJpaRepositories("com.github.jvalentino.alphabravo.repo.*")
 //@EntityScan("com.github.jvalentino.alphabravo.entity.*")
+@Slf4j
 class SpringWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        log.info('!!! addResourceHandlers')
+        // https://stackoverflow.com/questions/25061237/spring-4-addresourcehandlers-not-resolving-the-static-resources
+        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
