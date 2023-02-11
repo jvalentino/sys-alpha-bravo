@@ -27,6 +27,7 @@ class UserService {
 
     @PostConstruct
     void init(){
+        log.info('Checking to see if we need to create a default admin user...')
         List<AuthUser> users = authUserRepo.findAdminUser('admin')
 
         if (users.size() != 0) {
@@ -59,21 +60,23 @@ class UserService {
     }
 
     boolean isValidUser(String email, String password) {
-        println email + ' ' + password
+        log.info("Checking to see if ${email} is a valid user with its given password...")
         List<AuthUser> users = authUserRepo.findAdminUser(email)
 
         if (users.size() == 0) {
+            log.info("${email} doesn't have any email matches, so not valid")
             return false
         }
 
         AuthUser user = users.first()
         String expected = Md5Crypt.md5Crypt(password.bytes, user.salt)
-        println expected
 
         if (expected == user.password) {
+            log.info("Email ${email} gave a password that matches the salted MD5 hash")
             return true
         }
 
+        log.info("Email ${email} gave a passowrd that doesn't match the salted MD5 hash")
         false
     }
 

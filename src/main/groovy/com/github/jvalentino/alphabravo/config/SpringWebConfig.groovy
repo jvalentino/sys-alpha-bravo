@@ -15,13 +15,11 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @Configuration
 @ComponentScan(["com.github.jvalentino.alphabravo" ])
-//@EnableJpaRepositories("com.github.jvalentino.alphabravo.repo.*")
-//@EntityScan("com.github.jvalentino.alphabravo.entity.*")
 @Slf4j
 class SpringWebConfig implements WebMvcConfigurer {
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info('!!! addResourceHandlers')
         // https://stackoverflow.com/questions/25061237/spring-4-addresourcehandlers-not-resolving-the-static-resources
         registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/");
@@ -29,7 +27,7 @@ class SpringWebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public InternalResourceViewResolver viewResolver() {
+    InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/jsp/");

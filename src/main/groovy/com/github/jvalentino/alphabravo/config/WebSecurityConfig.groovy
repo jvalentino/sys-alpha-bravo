@@ -19,10 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 @Slf4j
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    //@Autowired
-    //CustomAuthenticationProvider customAuthenticationProvider
-
     @Autowired
     UserService userService
 
@@ -30,22 +26,30 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/webjars/**", "/", '/custom-login').permitAll()
+                .antMatchers(
+                        "/resources/**",
+                        "/webjars/**",
+                        "/",
+                        '/custom-login',
+                        '/invalid'
+                ).permitAll()
                 .anyRequest().authenticated()
 
     }
 
     @Bean
-    public AuthenticationManager customAuthenticationManager() throws Exception {
+    AuthenticationManager customAuthenticationManager() throws Exception {
         return new AuthenticationManager() {
             @Override
             Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
                 UsernamePasswordAuthenticationToken auth = authentication
 
-                println 'customAuthenticationManager'
+                String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+                log.info("Authenticating ${email}...")
+
                 // if they have not logged in, do so
-                if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == 'anonymousUser') {
+                if (email == 'anonymousUser') {
+                    log.info('Not logged in to we have to first login...')
                     if (userService.isValidUser(auth.getPrincipal(), auth.getCredentials())) {
                         return authentication
                     }
@@ -54,6 +58,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
 
                 // they are already logged in
+                log.info("${email} is already logged in")
                 return authentication
             }
         }

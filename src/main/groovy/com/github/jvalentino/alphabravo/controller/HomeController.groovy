@@ -29,4 +29,9 @@ class HomeController {
         return "index";
     }
 
+    @GetMapping("/invalid")
+    String index() {
+        'invalid'
+    }
+
 }

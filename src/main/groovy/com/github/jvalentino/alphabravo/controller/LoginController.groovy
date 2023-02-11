@@ -24,22 +24,21 @@ class LoginController {
     AuthenticationManager authenticationManager
 
     @PostMapping("/custom-login")
-    public RedirectView login(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-        log.info('login')
-        final RedirectView redirectView = new RedirectView("/dashboard", true);
+    RedirectView login(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        log.info('Attempting to login the user user by email of ' + user.email)
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.email, user.password));
-        boolean isAuthenticated = true
-        if (isAuthenticated) {
-            println 'Prior to auth'
-            println SecurityContextHolder.getContext().getAuthentication()
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            println 'after auth'
-            println SecurityContextHolder.getContext().getAuthentication()
-
+        try {
+            RedirectView redirectView = new RedirectView("/dashboard", true)
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.email, user.password));
+            SecurityContextHolder.getContext().setAuthentication(authentication)
+            return redirectView
+        } catch (e) {
+            log.error("${user.email} gave invalid credentials", e)
         }
 
-        return redirectView;
+        RedirectView redirectView = new RedirectView("/invalid", true)
+        return redirectView
     }
 
 }
