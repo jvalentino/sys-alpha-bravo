@@ -55,6 +55,26 @@ class UserService {
         log.info("Password: ${generatedPassword}")
         // For example: af99a7dd-4f7c-434d-909c-e655158d44a0
         log.info('===========================================================')
+
+    }
+
+    boolean isValidUser(String email, String password) {
+        println email + ' ' + password
+        List<AuthUser> users = authUserRepo.findAdminUser(email)
+
+        if (users.size() == 0) {
+            return false
+        }
+
+        AuthUser user = users.first()
+        String expected = Md5Crypt.md5Crypt(password.bytes, user.salt)
+        println expected
+
+        if (expected == user.password) {
+            return true
+        }
+
+        false
     }
 
     int countCurrentUsers() {

@@ -31,7 +31,12 @@ class LoginController {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.email, user.password));
         boolean isAuthenticated = true
         if (isAuthenticated) {
+            println 'Prior to auth'
+            println SecurityContextHolder.getContext().getAuthentication()
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            println 'after auth'
+            println SecurityContextHolder.getContext().getAuthentication()
+
         }
 
         return redirectView;
