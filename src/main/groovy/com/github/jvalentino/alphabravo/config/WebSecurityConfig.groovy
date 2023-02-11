@@ -42,24 +42,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthenticationManager() {
             @Override
             Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                UsernamePasswordAuthenticationToken auth = authentication
-
-                String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-                log.info("Authenticating ${email}...")
-
-                // if they have not logged in, do so
-                if (email == 'anonymousUser') {
-                    log.info('Not logged in to we have to first login...')
-                    if (userService.isValidUser(auth.getPrincipal(), auth.getCredentials())) {
-                        return authentication
-                    }
-
-                    throw new Exception('Invalid username and/or password')
-                }
-
-                // they are already logged in
-                log.info("${email} is already logged in")
-                return authentication
+                userService.authenticate(authentication)
             }
         }
     }

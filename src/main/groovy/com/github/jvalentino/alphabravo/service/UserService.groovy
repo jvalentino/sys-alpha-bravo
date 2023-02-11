@@ -5,6 +5,10 @@ import com.github.jvalentino.alphabravo.repo.AuthUserRepo
 import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.apache.commons.codec.digest.Md5Crypt
 import org.apache.commons.codec.digest.B64
@@ -82,6 +86,27 @@ class UserService {
 
     int countCurrentUsers() {
         authUserRepo.findAll().size()
+    }
+
+    Authentication authenticate(Authentication authentication) {
+        UsernamePasswordAuthenticationToken auth = authentication
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        log.info("Authenticating ${email}...")
+
+        // if they have not logged in, do so
+        if (email == 'anonymousUser') {
+            log.info('Not logged in to we have to first login...')
+            if (this.isValidUser(auth.getPrincipal(), auth.getCredentials())) {
+                return authentication
+            }
+
+            throw new Exception('Invalid username and/or password')
+        }
+
+        // they are already logged in
+        log.info("${email} is already logged in")
+        authentication
     }
 
     protected String generateSalt() {
