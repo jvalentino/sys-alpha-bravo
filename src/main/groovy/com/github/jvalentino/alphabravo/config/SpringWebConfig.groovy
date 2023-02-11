@@ -1,4 +1,4 @@
-package com.github.jvalentino.alphabravo
+package com.github.jvalentino.alphabravo.config
 
 import groovy.util.logging.Slf4j
 import org.springframework.boot.autoconfigure.domain.EntityScan

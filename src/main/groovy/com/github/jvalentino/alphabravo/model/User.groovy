@@ -1,4 +1,4 @@
-package com.github.jvalentino.alphabravo.controller
+package com.github.jvalentino.alphabravo.model
 
 class User {
 

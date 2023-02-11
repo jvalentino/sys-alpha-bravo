@@ -31,7 +31,7 @@
             </tbody>
         </table>
         <div>
-            <c:url var="login_url" value="/login"/>
+            <c:url var="login_url" value="/custom-login"/>
              <form:form action="${login_url}" method="post" modelAttribute="user">
                 <table>
                     <tbody>

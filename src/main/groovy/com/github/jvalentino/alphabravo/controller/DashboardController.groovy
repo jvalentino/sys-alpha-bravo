@@ -12,21 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 //@RequestMapping("/")
 @Slf4j
-class HomeController {
+class DashboardController {
 
     @Autowired
     UserService userService
 
-    @GetMapping("/")
-    String index(Model model) {
+    @GetMapping("/dashboard")
+    String dashboard(Model model) {
         log.info('Rendering index')
-        HomeModel response = new HomeModel()
-        response.with {
-            users = userService.countCurrentUsers()
-        }
-        model.addAttribute('model', response)
-        model.addAttribute('user', new User())
-        return "index";
+
+        return "dashboard";
     }
 
 }

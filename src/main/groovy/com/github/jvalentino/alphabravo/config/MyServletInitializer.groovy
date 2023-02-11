@@ -1,4 +1,4 @@
-package com.github.jvalentino.alphabravo
+package com.github.jvalentino.alphabravo.config
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
