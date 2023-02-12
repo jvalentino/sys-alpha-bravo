@@ -1,6 +1,7 @@
 package com.github.jvalentino.alphabravo.controller
 
 import com.github.jvalentino.alphabravo.model.User
+import com.github.jvalentino.alphabravo.service.UserService
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
@@ -23,24 +24,14 @@ class LoginController {
     @Autowired
     AuthenticationManager authenticationManager
 
+    @Autowired
+    UserService userService
+
     // https://stackoverflow.com/questions/29794096/spring-security-authentication-authorization-via-rest-endpoint
     // https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
     @PostMapping("/custom-login")
-    RedirectView login(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-        log.info('Attempting to login the user user by email of ' + user.email)
-
-        try {
-            RedirectView redirectView = new RedirectView("/dashboard", true)
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.email, user.password));
-            SecurityContextHolder.getContext().setAuthentication(authentication)
-            return redirectView
-        } catch (e) {
-            log.error("${user.email} gave invalid credentials", e)
-        }
-
-        RedirectView redirectView = new RedirectView("/invalid", true)
-        return redirectView
+    RedirectView login(@ModelAttribute("user") User user) {
+        userService.login(user, authenticationManager)
     }
 
 }
