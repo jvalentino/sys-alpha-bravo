@@ -112,11 +112,11 @@ class UserService {
     Authentication authenticate(Authentication authentication) {
         UsernamePasswordAuthenticationToken auth = authentication
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        String email = SecurityContextHolder.getContext().getAuthentication()?.getPrincipal()
         log.info("Authenticating ${email}...")
 
         // if they have not logged in, do so
-        if (email == 'anonymousUser') {
+        if (email == 'anonymousUser' || email == null) {
             log.info('Not logged in to we have to first login...')
             if (this.isValidUser(auth.getPrincipal(), auth.getCredentials())) {
                 return authentication
