@@ -40,27 +40,28 @@ class UserService {
 
         log.info('There are zero admin users, so we are going to now create one')
 
-        String randomSalt = generateSalt()
         String generatedPassword = UUID.randomUUID().toString()
-
-        AuthUser user = new AuthUser()
-        user.with {
-            email = 'admin'
-            firstName = 'admin'
-            lastName = 'admin'
-            salt = randomSalt
-            password = Md5Crypt.md5Crypt(generatedPassword.bytes, randomSalt)
-        }
-
-        authUserRepo.save(user)
+        AuthUser user = this.saveNewUser('admin', 'admin', 'admin', generatedPassword)
 
         log.info('===========================================================')
         log.info('New User Created')
         log.info("Email: ${user.email}")
         log.info("Password: ${generatedPassword}")
-        // For example: af99a7dd-4f7c-434d-909c-e655158d44a0
+        // For example: 0421908e-2285-4142-93ed-b5c060e4fcc4
         log.info('===========================================================')
 
+    }
+
+    AuthUser saveNewUser(String email, String firstName, String lastName, String plaintextPassword) {
+        String randomSalt = generateSalt()
+
+        AuthUser user = new AuthUser(email:email, firstName:firstName, lastName:lastName)
+        user.with {
+            salt = randomSalt
+            password = Md5Crypt.md5Crypt(plaintextPassword.bytes, randomSalt)
+        }
+
+        authUserRepo.save(user)
     }
 
     boolean isValidUser(String email, String password) {
