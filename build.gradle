@@ -5,6 +5,8 @@ plugins {
 	id 'org.gretty' version '3.0.9'
 	// JACACO!
 	id 'jacoco'
+	// CODENARC!
+	id 'codenarc'
 }
 
 apply plugin: 'war'
@@ -104,4 +106,21 @@ jacocoTestCoverageVerification {
 
 check {
 	dependsOn jacocoTestCoverageVerification
+}
+
+// CODENARC!
+codenarcTest.enabled = false
+
+task codenarcConsoleReport {
+	doLast {
+		println file("${codenarc.reportsDir}/main.txt").text
+	}
+}
+
+codenarcMain {
+	finalizedBy codenarcConsoleReport
+	reports {
+		text.enabled = true
+		html.enabled = true
+	}
 }

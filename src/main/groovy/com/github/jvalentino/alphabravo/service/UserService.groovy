@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.apache.commons.codec.digest.Md5Crypt
@@ -17,8 +16,6 @@ import org.apache.commons.codec.digest.B64
 import org.springframework.web.servlet.view.RedirectView
 
 import javax.annotation.PostConstruct
-import java.security.MessageDigest
-import java.security.SecureRandom
 
 /**
  * A general service used for dealing with users
@@ -27,13 +24,20 @@ import java.security.SecureRandom
 @CompileDynamic
 @Service
 @Slf4j
+@SuppressWarnings([
+        'UnnecessaryToString',
+        'DuplicateStringLiteral',
+        'ThrowException',
+        'UnnecessarySetter',
+        'UnnecessaryGetter',
+])
 class UserService {
 
     @Autowired
     AuthUserRepo authUserRepo
 
     @PostConstruct
-    void init(){
+    void init() {
         log.info('Checking to see if we need to create a default admin user...')
         List<AuthUser> users = authUserRepo.findAdminUser('admin')
 
@@ -52,24 +56,23 @@ class UserService {
         log.info("Password: ${generatedPassword}")
         // For example: 0421908e-2285-4142-93ed-b5c060e4fcc4
         log.info('===========================================================')
-
     }
 
     RedirectView login(User user, AuthenticationManager authenticationManager) {
         log.info('Attempting to login the user user by email of ' + user.email)
 
         try {
-            RedirectView redirectView = new RedirectView("/dashboard", true)
+            RedirectView redirectView = new RedirectView('/dashboard', true)
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.email, user.password));
+                    new UsernamePasswordAuthenticationToken(user.email, user.password))
             SecurityContextHolder.getContext().setAuthentication(authentication)
             return redirectView
         } catch (e) {
             log.error("${user.email} gave invalid credentials", e)
         }
 
-        RedirectView redirectView = new RedirectView("/invalid", true)
-        return redirectView
+        RedirectView redirectView = new RedirectView('/invalid', true)
+        redirectView
     }
 
     AuthUser saveNewUser(String email, String firstName, String lastName, String plaintextPassword) {

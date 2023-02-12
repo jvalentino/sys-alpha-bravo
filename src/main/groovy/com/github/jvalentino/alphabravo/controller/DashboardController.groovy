@@ -1,27 +1,24 @@
 package com.github.jvalentino.alphabravo.controller
 
-import com.github.jvalentino.alphabravo.model.HomeModel
-import com.github.jvalentino.alphabravo.model.User
-import com.github.jvalentino.alphabravo.service.UserService
+import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 
+/**
+ * Used for the dashboard
+ * @author john.valentino
+ */
 @Controller
-//@RequestMapping("/")
 @Slf4j
+@CompileDynamic
 class DashboardController {
 
-    @Autowired
-    UserService userService
-
-    @GetMapping("/dashboard")
-    String dashboard(Model model) {
+    @GetMapping('/dashboard')
+    String dashboard() {
         log.info('Rendering index')
 
-        return "dashboard";
+        'dashboard'
     }
 
 }

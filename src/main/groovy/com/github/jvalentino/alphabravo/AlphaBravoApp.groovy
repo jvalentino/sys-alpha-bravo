@@ -1,22 +1,25 @@
 package com.github.jvalentino.alphabravo
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import groovy.transform.CompileDynamic
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
-import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * Main application
+ */
 @SpringBootApplication
-//@ComponentScan('com.github.jvalentino.alphabravo')
+@CompileDynamic
 class AlphaBravoApp extends SpringBootServletInitializer {
 
-	static void main(String[] args) {
-		SpringApplication.run(AlphaBravoApp, args)
-	}
+    static void main(String[] args) {
+        SpringApplication.run(AlphaBravoApp, args)
+    }
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(AlphaBravoApp)
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        builder.sources(AlphaBravoApp)
+    }
 
 }

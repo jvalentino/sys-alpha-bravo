@@ -3,21 +3,26 @@ package com.github.jvalentino.alphabravo.controller
 import com.github.jvalentino.alphabravo.model.HomeModel
 import com.github.jvalentino.alphabravo.model.User
 import com.github.jvalentino.alphabravo.service.UserService
+import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 
+/**
+ * Controller used for the initial landing page
+ * @author john.valentino
+ */
 @Controller
-//@RequestMapping("/")
 @Slf4j
+@CompileDynamic
 class HomeController {
 
     @Autowired
     UserService userService
 
-    @GetMapping("/")
+    @GetMapping('/')
     String index(Model model) {
         log.info('Rendering index')
         HomeModel response = new HomeModel()
@@ -26,10 +31,10 @@ class HomeController {
         }
         model.addAttribute('model', response)
         model.addAttribute('user', new User())
-        return "index";
+        'index'
     }
 
-    @GetMapping("/invalid")
+    @GetMapping('/invalid')
     String invalid() {
         'invalid'
     }
