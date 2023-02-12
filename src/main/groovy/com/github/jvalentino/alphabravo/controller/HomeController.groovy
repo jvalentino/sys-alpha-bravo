@@ -30,7 +30,7 @@ class HomeController {
     }
 
     @GetMapping("/invalid")
-    String index() {
+    String invalid() {
         'invalid'
     }
 
