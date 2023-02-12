@@ -23,6 +23,8 @@ class LoginController {
     @Autowired
     AuthenticationManager authenticationManager
 
+    // https://stackoverflow.com/questions/29794096/spring-security-authentication-authorization-via-rest-endpoint
+    // https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
     @PostMapping("/custom-login")
     RedirectView login(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
         log.info('Attempting to login the user user by email of ' + user.email)

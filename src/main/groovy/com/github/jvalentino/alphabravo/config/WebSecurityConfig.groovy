@@ -37,6 +37,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    // https://stackoverflow.com/questions/4664893/how-to-manually-set-an-authenticated-user-in-spring-security-springmvc
     @Bean
     AuthenticationManager customAuthenticationManager() throws Exception {
         return new AuthenticationManager() {
