@@ -44,4 +44,16 @@ class AuthUser {
     @JsonIgnore
     Set<Doc> updatedBys
 
+    @OneToMany(mappedBy='createdByUser', fetch = FetchType.LAZY)
+    @JsonIgnore
+    Set<DocVersion> versionCreatedBys
+
+    @OneToMany(mappedBy='createdByUser', fetch = FetchType.LAZY)
+    @JsonIgnore
+    Set<DocTask> taskCreatedBys
+
+    @OneToMany(mappedBy='updatedByUser', fetch = FetchType.LAZY)
+    @JsonIgnore
+    Set<DocTask> taskUpdatedBys
+
 }

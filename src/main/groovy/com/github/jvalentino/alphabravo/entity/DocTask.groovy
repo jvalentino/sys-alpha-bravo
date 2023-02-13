@@ -10,27 +10,31 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
 import javax.persistence.Table
 import java.sql.Timestamp
 
 /**
- * represents the document
+ * A task associated with a document
  * @author john.valentino
  */
 @CompileDynamic
 @Entity
-@Table(name = 'doc')
-class Doc {
+@Table(name = 'doc_task')
+class DocTask {
 
     @Id @GeneratedValue
-    @Column(name = 'doc_id')
-    Long docId
+    @Column(name = 'doc_task_id')
+    Long docTaskId
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = 'doc_id', referencedColumnName = 'doc_id')
+    Doc doc
 
     String name
 
-    @Column(name = 'mime_type')
-    String mimeType
+    String status
+
+    String content
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = 'created_by_user_id', referencedColumnName = 'auth_user_id')
@@ -45,11 +49,5 @@ class Doc {
 
     @Column(name = 'updated_datetime')
     Timestamp updatedDateTime
-
-    @OneToMany(mappedBy='doc', fetch = FetchType.LAZY)
-    Set<DocVersion> versions
-
-    @OneToMany(mappedBy='doc', fetch = FetchType.LAZY)
-    Set<DocTask> tasks
 
 }
