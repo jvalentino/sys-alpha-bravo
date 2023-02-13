@@ -27,6 +27,7 @@ class HomeControllerIntgTest extends BaseIntg {
         and:
         HomeModel model = modelAndView.model.model
         model.users == 1
+        model.documents == 0
 
         and:
         User user = modelAndView.model.user

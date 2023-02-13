@@ -1,11 +1,14 @@
 package com.github.jvalentino.alphabravo.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import groovy.transform.CompileDynamic
 
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 /**
@@ -32,5 +35,13 @@ class AuthUser {
 
     @Column(name = 'last_name')
     String lastName
+
+    @OneToMany(mappedBy='createdByUser', fetch = FetchType.LAZY)
+    @JsonIgnore
+    Set<Doc> createdBys
+
+    @OneToMany(mappedBy='updatedByUser', fetch = FetchType.LAZY)
+    @JsonIgnore
+    Set<Doc> updatedBys
 
 }

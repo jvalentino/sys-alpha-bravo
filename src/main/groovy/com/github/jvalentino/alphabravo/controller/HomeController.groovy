@@ -2,6 +2,7 @@ package com.github.jvalentino.alphabravo.controller
 
 import com.github.jvalentino.alphabravo.model.HomeModel
 import com.github.jvalentino.alphabravo.model.User
+import com.github.jvalentino.alphabravo.service.DocService
 import com.github.jvalentino.alphabravo.service.UserService
 import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
@@ -22,12 +23,16 @@ class HomeController {
     @Autowired
     UserService userService
 
+    @Autowired
+    DocService docService
+
     @GetMapping('/')
     String index(Model model) {
         log.info('Rendering index')
         HomeModel response = new HomeModel()
         response.with {
             users = userService.countCurrentUsers()
+            documents = docService.countDocuments()
         }
         model.addAttribute('model', response)
         model.addAttribute('user', new User())

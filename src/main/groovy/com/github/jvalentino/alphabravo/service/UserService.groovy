@@ -109,7 +109,7 @@ class UserService {
     }
 
     int countCurrentUsers() {
-        authUserRepo.findAll().size()
+        authUserRepo.count()
     }
 
     Authentication authenticate(Authentication authentication) {
