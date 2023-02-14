@@ -1,8 +1,12 @@
 package com.github.jvalentino.alphabravo.controller
 
+import com.github.jvalentino.alphabravo.model.DashboardModel
+import com.github.jvalentino.alphabravo.service.DocService
 import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 
 /**
@@ -14,9 +18,16 @@ import org.springframework.web.bind.annotation.GetMapping
 @CompileDynamic
 class DashboardController {
 
+    @Autowired
+    DocService docService
+
     @GetMapping('/dashboard')
-    String dashboard() {
-        log.info('Rendering index')
+    String dashboard(Model model) {
+        log.info('Rendering dashboard')
+
+        DashboardModel dashboard = new DashboardModel()
+
+        model.addAttribute('model', dashboard)
 
         'dashboard'
     }

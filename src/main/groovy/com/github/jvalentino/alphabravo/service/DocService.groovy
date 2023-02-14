@@ -1,5 +1,6 @@
 package com.github.jvalentino.alphabravo.service
 
+import com.github.jvalentino.alphabravo.repo.AuthUserRepo
 import com.github.jvalentino.alphabravo.repo.DocRepo
 import groovy.transform.CompileDynamic
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,6 +16,9 @@ class DocService {
 
     @Autowired
     DocRepo docRepo
+
+    @Autowired
+    AuthUserRepo authUserRepo
 
     Long countDocuments() {
         docRepo.count()

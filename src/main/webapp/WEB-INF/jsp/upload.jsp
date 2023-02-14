@@ -4,20 +4,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
     <head>
-        <title>Dashboard</title>
+        <title>Upload</title>
         <spring:url value="/resources/core/css/main.css" var="coreCss" />
         <link href="${coreCss}" rel="stylesheet" />
     </head>
     <body>
-        <h1>Dashboard</h1>
-
-        <table>
-            <tbody>
-                <tr>
-                   <td><a href="./upload">Upload</a></td>
-                <tr>
-            </tbody>
-        </table>
+        <h1>Upload</h1>
 
     </body>
 </html>

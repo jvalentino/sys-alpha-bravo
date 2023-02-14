@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository
  * Repository interface for Doc, for all your customn HQL needs
  * @author john.valentino
  */
-interface DocRepo  extends JpaRepository<Doc, Long> {
+interface DocRepo extends JpaRepository<Doc, Long> {
 
 }
