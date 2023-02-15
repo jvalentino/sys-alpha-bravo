@@ -11,5 +11,9 @@
     <body>
         <h1>Upload</h1>
 
+        <form method="POST" action="/upload-file" enctype="multipart/form-data">
+        		<input type="file" name="file" /><br />
+        		<br /> <input type="submit" value="Submit" />
+        	</form>
     </body>
 </html>

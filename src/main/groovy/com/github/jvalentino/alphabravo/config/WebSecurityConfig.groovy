@@ -43,6 +43,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // https://stackoverflow.com/questions/32064000/uploading-file-returns-403-error-spring-mvc
+        http.cors().and().csrf().disable()
+
         http
                 .authorizeRequests()
                 .antMatchers(
