@@ -61,4 +61,12 @@ class DocService {
         docRepo.allDocs()
     }
 
+    Doc retrieveDocVersions(Long docId) {
+        Doc doc = docRepo.findById(docId).get()
+
+        doc.versions = docVersionRepo.getVersionsWithoutData(docId)
+
+        doc
+    }
+
 }

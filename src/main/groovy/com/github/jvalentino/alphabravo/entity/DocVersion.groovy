@@ -49,4 +49,12 @@ class DocVersion {
     @JoinColumn(name = 'created_by_user_id', referencedColumnName = 'auth_user_id')
     AuthUser createdByUser
 
+    DocVersion() { }
+
+    DocVersion(Long docVersionId, Long versionNum, Date createdDateTime) {
+        this.docVersionId = docVersionId
+        this.versionNum = versionNum
+        this.createdDateTime = new Timestamp(createdDateTime.time)
+    }
+
 }
