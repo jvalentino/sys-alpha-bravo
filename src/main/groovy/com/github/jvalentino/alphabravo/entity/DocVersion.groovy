@@ -1,6 +1,7 @@
 package com.github.jvalentino.alphabravo.entity
 
 import groovy.transform.CompileDynamic
+import org.hibernate.annotations.Type
 
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -27,11 +28,17 @@ class DocVersion {
     @Column(name = 'doc_version_id')
     Long docVersionId
 
+    @Column(name = 'version_num')
+    Long versionNum
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = 'doc_id', referencedColumnName = 'doc_id')
     Doc doc
 
+    // https://stackoverflow.com/questions/9114510/
+    // seam-file-upload-to-postgres-bytea-column-column-is-bytea-but-expression-is-of
     @Lob
+    @Type(type='org.hibernate.type.BinaryType')
     @Column(name = 'data', columnDefinition = 'BLOB')
     byte[] data
 

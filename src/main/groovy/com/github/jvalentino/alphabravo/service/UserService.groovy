@@ -112,8 +112,18 @@ class UserService {
         authUserRepo.count()
     }
 
+    AuthUser currentLoggedInUser() {
+        Long id = this.retrieveCurrentlyLoggedInUserIdAsLong()
+        AuthUser user = authUserRepo.findById(id).get()
+        user
+    }
+
     String retrieveCurrentlyLoggedInUserId() {
         SecurityContextHolder.getContext().getAuthentication()?.getPrincipal()
+    }
+
+    Long retrieveCurrentlyLoggedInUserIdAsLong() {
+        this.retrieveCurrentlyLoggedInUserId().toLong()
     }
 
     Authentication authenticate(Authentication authentication) {
