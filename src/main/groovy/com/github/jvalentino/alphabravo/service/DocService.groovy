@@ -57,4 +57,8 @@ class DocService {
         docVersionRepo.save(version)
     }
 
+    List<Doc> allDocs() {
+        docRepo.allDocs()
+    }
+
 }

@@ -19,5 +19,22 @@
             </tbody>
         </table>
 
+        <table>
+            <theader>
+                <tr>
+                    <th>Document Name</th>
+                    <th>Last Updated By</th>
+                </tr
+            </theader>
+            <tbody>
+                <c:forEach items="${model.documents}" var="document">
+                    <tr>
+                        <td>${document.name}</td>
+                        <td>${document.updatedByUser.email}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        <table>
+
     </body>
 </html>

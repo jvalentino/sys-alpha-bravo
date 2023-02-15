@@ -26,6 +26,9 @@ class DashboardController {
         log.info('Rendering dashboard')
 
         DashboardModel dashboard = new DashboardModel()
+        dashboard.with {
+            documents = docService.allDocs()
+        }
 
         model.addAttribute('model', dashboard)
 

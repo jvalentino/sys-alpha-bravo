@@ -2,6 +2,8 @@ package com.github.jvalentino.alphabravo.controller
 
 import com.github.jvalentino.alphabravo.entity.AuthUser
 import com.github.jvalentino.alphabravo.entity.Doc
+import com.github.jvalentino.alphabravo.model.DashboardModel
+import com.github.jvalentino.alphabravo.model.HomeModel
 import com.github.jvalentino.alphabravo.repo.AuthUserRepo
 import com.github.jvalentino.alphabravo.service.UserService
 import com.github.jvalentino.alphabravo.util.BaseIntg
@@ -54,6 +56,10 @@ class DashboardControllerIntgTest extends BaseIntg {
         then:
         ModelAndView modelAndView = response.modelAndView
         modelAndView.getViewName() == 'dashboard'
+
+        and:
+        DashboardModel model = modelAndView.model.model
+        model.documents.size() == 0
     }
 
     def "test dashboard no auth"() {

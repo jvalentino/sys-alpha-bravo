@@ -1,5 +1,6 @@
 package com.github.jvalentino.alphabravo.model
 
+import com.github.jvalentino.alphabravo.entity.Doc
 import groovy.transform.CompileDynamic
 
 /**
@@ -9,6 +10,6 @@ import groovy.transform.CompileDynamic
 @CompileDynamic
 class DashboardModel {
 
-    List<String> topDocumentCreators = []
+    List<Doc> documents = []
 
 }
