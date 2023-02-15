@@ -11,6 +11,8 @@
     <body>
         <h1>${model.doc.name}</h1>
 
+        <%@ include file="menu.jsp" %>
+
         <table>
             <theader>
                 <tr>

@@ -11,26 +11,24 @@
     <body>
         <h1>Dashboard</h1>
 
-        <table>
-            <tbody>
-                <tr>
-                   <td><a href="./upload">Upload</a></td>
-                <tr>
-            </tbody>
-        </table>
+        <%@ include file="menu.jsp" %>
 
         <table>
             <theader>
                 <tr>
                     <th>Document Name</th>
                     <th>Last Updated By</th>
-                </tr
+                    <th></th>
+                </tr>
             </theader>
             <tbody>
                 <c:forEach items="${model.documents}" var="document">
                     <tr>
                         <td>${document.name}</td>
                         <td>${document.updatedByUser.email}</td>
+                        <td>
+                            <a href="./view-versions/${document.docId}">View Versions</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

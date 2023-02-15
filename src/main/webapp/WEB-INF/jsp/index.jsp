@@ -18,6 +18,9 @@
             <li>The system shall allow a user to add tasks to a document</li>
             <li>The system shall allow a user to download a document</li>
         </ul>
+
+        <hr />
+
         <table>
             <tbody>
                 <tr>
@@ -30,6 +33,7 @@
                 </tr>
             </tbody>
         </table>
+        <hr />
         <div>
             <c:url var="login_url" value="/custom-login"/>
              <form:form action="${login_url}" method="post" modelAttribute="user">
