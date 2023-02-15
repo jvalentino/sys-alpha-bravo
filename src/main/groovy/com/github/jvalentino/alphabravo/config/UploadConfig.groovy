@@ -9,6 +9,7 @@ import org.springframework.web.multipart.support.MultipartFilter
 
 /**
  * Required magic for actually being able to upload a file
+ * https://stackoverflow.com/questions/30768242/how-to-use-commonsmultipartresolver-in-spring-boot
  * @author john.valetino
  */
 @CompileDynamic

@@ -87,13 +87,13 @@ class UserService {
         authUserRepo.save(user)
     }
 
-    boolean isValidUser(String email, String password) {
+    AuthUser isValidUser(String email, String password) {
         log.info("Checking to see if ${email} is a valid user with its given password...")
         List<AuthUser> users = authUserRepo.findAdminUser(email)
 
         if (users.size() == 0) {
             log.info("${email} doesn't have any email matches, so not valid")
-            return false
+            return null
         }
 
         AuthUser user = users.first()
@@ -101,35 +101,40 @@ class UserService {
 
         if (expected == user.password) {
             log.info("Email ${email} gave a password that matches the salted MD5 hash")
-            return true
+            return user
         }
 
         log.info("Email ${email} gave a passowrd that doesn't match the salted MD5 hash")
-        false
+        null
     }
 
     int countCurrentUsers() {
         authUserRepo.count()
     }
 
+    String retrieveCurrentlyLoggedInUserId() {
+        SecurityContextHolder.getContext().getAuthentication()?.getPrincipal()
+    }
+
     Authentication authenticate(Authentication authentication) {
         UsernamePasswordAuthenticationToken auth = authentication
 
-        String email = SecurityContextHolder.getContext().getAuthentication()?.getPrincipal()
-        log.info("Authenticating ${email}...")
+        String authUserId = this.retrieveCurrentlyLoggedInUserId()
+        log.info("Authenticating ${authUserId}...")
 
         // if they have not logged in, do so
-        if (email == 'anonymousUser' || email == null) {
+        if (authUserId == 'anonymousUser' || authUserId == null) {
             log.info('Not logged in to we have to first login...')
-            if (this.isValidUser(auth.getPrincipal(), auth.getCredentials())) {
-                return authentication
+            AuthUser user = this.isValidUser(auth.getPrincipal(), auth.getCredentials())
+            if (user != null) {
+                return new UsernamePasswordAuthenticationToken(user.authUserId, user.password)
             }
 
             throw new Exception('Invalid username and/or password')
         }
 
         // they are already logged in
-        log.info("${email} is already logged in")
+        log.info("${authUserId} is already logged in")
         authentication
     }
 

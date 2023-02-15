@@ -41,7 +41,7 @@ abstract class BaseIntg extends Specification {
 
     void mockAdminLoggedIn() {
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken('admin', null)
+                new UsernamePasswordAuthenticationToken('1', null)
         SecurityContextHolder.getContext().setAuthentication(authentication)
     }
 
