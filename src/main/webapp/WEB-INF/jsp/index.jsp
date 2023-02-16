@@ -15,7 +15,6 @@
         <ul>
             <li>The system shall allow a user to add documents</li>
             <li>The system shall version documents</li>
-            <li>The system shall allow a user to add tasks to a document</li>
             <li>The system shall allow a user to download a document</li>
         </ul>
 

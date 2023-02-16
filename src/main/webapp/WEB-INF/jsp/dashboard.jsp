@@ -18,6 +18,7 @@
                 <tr>
                     <th>Document Name</th>
                     <th>Last Updated By</th>
+                    <th>Last Updated</td>
                     <th></th>
                 </tr>
             </theader>
@@ -26,9 +27,11 @@
                     <tr>
                         <td>${document.name}</td>
                         <td>${document.updatedByUser.email}</td>
+                        <td>${document.updatedDateTime}</td>
                         <td>
                             <a href="./view-versions/${document.docId}">View Versions</a>
                         </td>
+
                     </tr>
                 </c:forEach>
             </tbody>

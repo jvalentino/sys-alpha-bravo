@@ -13,7 +13,7 @@ interface DocRepo extends JpaRepository<Doc, Long> {
     @Query('''
         select distinct d from Doc d
         left join fetch d.updatedByUser
-        order by d.name, d.updatedDateTime
+        order by d.updatedDateTime DESC
     ''')
     List<Doc> allDocs()
 
