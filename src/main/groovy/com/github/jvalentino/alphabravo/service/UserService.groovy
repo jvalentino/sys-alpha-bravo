@@ -36,6 +36,8 @@ class UserService {
     @Autowired
     AuthUserRepo authUserRepo
 
+    protected UserService instance = this
+
     @PostConstruct
     void init() {
         log.info('Checking to see if we need to create a default admin user...')
@@ -48,7 +50,7 @@ class UserService {
         log.info('There are zero admin users, so we are going to now create one')
 
         String generatedPassword = UUID.randomUUID().toString()
-        AuthUser user = this.saveNewUser('admin', 'admin', 'admin', generatedPassword)
+        AuthUser user = instance.saveNewUser('admin', 'admin', 'admin', generatedPassword)
 
         log.info('===========================================================')
         log.info('New User Created')
@@ -76,7 +78,7 @@ class UserService {
     }
 
     AuthUser saveNewUser(String email, String firstName, String lastName, String plaintextPassword) {
-        String randomSalt = generateSalt()
+        String randomSalt = instance.generateSalt()
 
         AuthUser user = new AuthUser(email:email, firstName:firstName, lastName:lastName)
         user.with {
@@ -129,13 +131,13 @@ class UserService {
     Authentication authenticate(Authentication authentication) {
         UsernamePasswordAuthenticationToken auth = authentication
 
-        String authUserId = this.retrieveCurrentlyLoggedInUserId()
+        String authUserId = instance.retrieveCurrentlyLoggedInUserId()
         log.info("Authenticating ${authUserId}...")
 
         // if they have not logged in, do so
         if (authUserId == 'anonymousUser' || authUserId == null) {
             log.info('Not logged in to we have to first login...')
-            AuthUser user = this.isValidUser(auth.getPrincipal(), auth.getCredentials())
+            AuthUser user = instance.isValidUser(auth.getPrincipal(), auth.getCredentials())
             if (user != null) {
                 return new UsernamePasswordAuthenticationToken(user.authUserId, user.password)
             }
