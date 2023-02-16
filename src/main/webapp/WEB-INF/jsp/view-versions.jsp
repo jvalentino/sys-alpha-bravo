@@ -13,11 +13,23 @@
 
         <%@ include file="menu.jsp" %>
 
+        <h2>Add New Version</h2>
+
+        <form method="POST" action="/version/new/${model.doc.docId}" enctype="multipart/form-data">
+                <input type="file" name="file" /><br />
+                <br /> <input type="submit" value="Submit" />
+        </form>
+
+        <hr />
+
+        <h2>Versions</h2>
+
         <table>
             <theader>
                 <tr>
                     <th>Version</th>
                     <th>Uploaded</th>
+                    <th>Download</th>
                 </tr
             </theader>
             <tbody>
@@ -25,6 +37,7 @@
                     <tr>
                         <td>${version.versionNum}</td>
                         <td>${version.createdDateTime}</td>
+                        <td><a href="/version/download/${version.docVersionId}">Download</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

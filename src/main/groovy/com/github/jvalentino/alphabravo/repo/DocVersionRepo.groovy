@@ -29,4 +29,7 @@ interface DocVersionRepo extends JpaRepository<DocVersion, Long> {
     ''')
     List<DocVersion> getWithParent(Long docVersionId)
 
+    @Query('select count(v) from DocVersion v where v.doc.docId = ?1')
+    Long countForDoc(Long docId)
+
 }

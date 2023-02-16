@@ -1,8 +1,11 @@
 package com.github.jvalentino.alphabravo.controller
 
+import com.github.jvalentino.alphabravo.entity.AuthUser
 import com.github.jvalentino.alphabravo.entity.DocVersion
 import com.github.jvalentino.alphabravo.model.ViewVersionModel
 import com.github.jvalentino.alphabravo.service.DocService
+import com.github.jvalentino.alphabravo.service.UserService
+import com.github.jvalentino.alphabravo.util.DateGenerator
 import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,6 +13,10 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.view.RedirectView
 
 import javax.servlet.http.HttpServletResponse
 
@@ -25,6 +32,9 @@ class ViewVersionController {
 
     @Autowired
     DocService docService
+
+    @Autowired
+    UserService userService
 
     @GetMapping('/view-versions/{docId}')
     String index(@PathVariable(value='docId') Long docId, Model model) {
@@ -58,6 +68,15 @@ class ViewVersionController {
         while ((numBytesRead = is.read(buffer)) > 0) {
             out.write(buffer, 0, numBytesRead)
         }
+    }
+
+    @PostMapping('/version/new/{docId}')
+    RedirectView upload(@RequestParam('file') MultipartFile file, @PathVariable(value='docId') Long docId) {
+        AuthUser user = userService.currentLoggedInUser()
+
+        docService.uploadNewVersion(user, file, DateGenerator.date(), docId)
+
+        new RedirectView('/view-versions/' + docId, true)
     }
 
 }

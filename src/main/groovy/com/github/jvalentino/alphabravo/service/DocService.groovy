@@ -63,15 +63,36 @@ class DocService {
 
     Doc retrieveDocVersions(Long docId) {
         Doc doc = docRepo.findById(docId).get()
-
         doc.versions = docVersionRepo.getVersionsWithoutData(docId)
-
         doc
     }
 
     DocVersion retrieveVersion(Long docVersionId) {
         DocVersion version = docVersionRepo.getWithParent(docVersionId).first()
         version
+    }
+
+    DocVersion uploadNewVersion(AuthUser user, MultipartFile file, Date date, Long docId) {
+        long currentCount = docVersionRepo.countForDoc(docId)
+
+        Doc parentDoc = docRepo.findById(docId).get()
+        parentDoc.with {
+            name = file.originalFilename
+            updatedByUser = user
+            updatedDateTime = new Timestamp(date.time)
+        }
+
+        docRepo.save(parentDoc)
+
+        DocVersion version = new DocVersion()
+        version.with {
+            doc = parentDoc
+            data = file.bytes
+            createdDateTime = new Timestamp(date.time)
+            createdByUser = user
+            versionNum = currentCount + 1
+        }
+        docVersionRepo.save(version)
     }
 
 }
