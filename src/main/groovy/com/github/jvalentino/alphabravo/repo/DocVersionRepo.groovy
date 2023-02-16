@@ -22,4 +22,11 @@ interface DocVersionRepo extends JpaRepository<DocVersion, Long> {
     ''')
     List<DocVersion> getVersionsWithoutData(Long docId)
 
+    @Query('''
+        select distinct v from DocVersion v
+        left join fetch v.doc
+        where v.docVersionId = ?1
+    ''')
+    List<DocVersion> getWithParent(Long docVersionId)
+
 }

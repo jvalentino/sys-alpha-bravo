@@ -1,6 +1,6 @@
 package com.github.jvalentino.alphabravo.controller
 
-import com.github.jvalentino.alphabravo.entity.Doc
+import com.github.jvalentino.alphabravo.entity.DocVersion
 import com.github.jvalentino.alphabravo.model.ViewVersionModel
 import com.github.jvalentino.alphabravo.service.DocService
 import groovy.transform.CompileDynamic
@@ -11,6 +11,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
+import javax.servlet.http.HttpServletResponse
+
 /**
  * Controller used for viewing document versions
  * @author john.valentino
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable
 @Slf4j
 @CompileDynamic
 @Controller
+@SuppressWarnings(['UnnecessarySetter', 'UnnecessaryGetter'])
 class ViewVersionController {
 
     @Autowired
@@ -35,6 +38,26 @@ class ViewVersionController {
         model.addAttribute('model', result)
 
         'view-versions'
+    }
+
+    // https://www.baeldung.com/servlet-download-file
+    @GetMapping('/version/download/{docVersionId}')
+    void downloadVersion(@PathVariable(value='docVersionId') Long docVersionId, HttpServletResponse response) {
+        DocVersion version = docService.retrieveVersion(docVersionId)
+
+        response.setContentType(version.doc.mimeType)
+        response.setHeader('Content-disposition',
+                "attachment; filename=${version.doc.name.replaceAll(' ', '')}")
+
+        InputStream is = new ByteArrayInputStream(version.data)
+        OutputStream out = response.getOutputStream()
+
+        byte[] buffer = new byte[1048]
+
+        int numBytesRead
+        while ((numBytesRead = is.read(buffer)) > 0) {
+            out.write(buffer, 0, numBytesRead)
+        }
     }
 
 }

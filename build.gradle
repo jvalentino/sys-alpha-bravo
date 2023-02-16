@@ -39,7 +39,7 @@ dependencies {
 	// JSP Magic
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	implementation 'javax.servlet:jstl:1.2'
-	implementation 'org.springframework:spring-webmvc:5.2.22.RELEASE'
+	implementation 'org.springframework:spring-webmvc'
 	implementation 'org.webjars:bootstrap:5.2.0'
 
 	// DB management

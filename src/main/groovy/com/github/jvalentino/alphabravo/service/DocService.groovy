@@ -69,4 +69,9 @@ class DocService {
         doc
     }
 
+    DocVersion retrieveVersion(Long docVersionId) {
+        DocVersion version = docVersionRepo.getWithParent(docVersionId).first()
+        version
+    }
+
 }

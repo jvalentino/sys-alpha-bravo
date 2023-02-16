@@ -65,4 +65,45 @@ class ViewVersionControllerIntgTest extends BaseIntg {
         model.doc.versions.first().versionNum == 1
     }
 
+    def "test download version"() {
+        given:
+        this.mockAdminLoggedIn()
+
+        and:
+        AuthUser user = authUserRepo.findAdminUser('admin').first()
+
+        Doc doc = new Doc()
+        doc.with {
+            name = 'alpha.txt'
+            createdByUser = user
+            updatedByUser = user
+            mimeType = 'text/plain'
+            createdDateTime = new Timestamp(new Date().time)
+            updatedDateTime = new Timestamp(new Date().time)
+        }
+        this.entityManager.persist(doc)
+
+        DocVersion version = new DocVersion(doc:doc)
+        version.with {
+            versionNum = 1L
+            createdDateTime = new Timestamp(new Date().time)
+            createdByUser = user
+            data = "this is a test".bytes
+        }
+        this.entityManager.persist(version)
+
+        when:
+        MvcResult response = mvc.perform(
+                get("/version/download/${version.docVersionId}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn()
+
+        then:
+        response
+        response.response.contentType == 'text/plain'
+        new String(response.response.getContentAsByteArray()) == 'this is a test'
+
+    }
+
 }
