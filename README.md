@@ -151,6 +151,20 @@ Prerequisites
 
 All of these you can get in one command using this installation automation (if you are on a Mac): https://github.com/jvalentino/setup-automation
 
+## Database
+
+You launch the database container by running:
+
+```bash
+docker compose up -d
+```
+
+This sill execute the container in detetached mode, and leave it running in the background.
+
+You then have to manually create a database name `examplesys`, which is most easilly done via pgadmin:
+
+![01](./wiki/create-db.png)
+
 ## IDE Testing
 
 This imports as a standard Gradle project, in which you are able to easily execute tests:
