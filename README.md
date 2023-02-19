@@ -86,24 +86,24 @@ Every framework has a purpose for making things easier. However, the downside is
 
 ![01](./wiki/mvc.png)
 
-A commom practice when going server-side scripting is to use the [MVC Pattern](https://github.com/jvalentino/glossary#mvc-design-pattern). This is done to help separate code by function, and in the case of your JSP-based technology stack, that means:
+A common practice when going server-side scripting is to use the [MVC Pattern](https://github.com/jvalentino/glossary#mvc-design-pattern). This is done to help separate code by function, and in the case of your JSP-based technology stack, that means:
 
 1. The View is always the [JSP](https://github.com/jvalentino/glossary#jsp)
 2. The Controller is the point of entry at the HTTP Request level
 3. The Model is a standalone representation of the data the page needs to turn into HTML
 
-Since we are interacting with a database for data persistence, it is best to use the [DAO Pattern](https://github.com/jvalentino/glossary#dao-design-pattern) to deal with that interation. Spring a Spring Boot perspective, it is common to add in a service layer to manage the different DAO related classed, typically called Repositories.
+Since we are interacting with a database for data persistence, it is best to use the [DAO Pattern](https://github.com/jvalentino/glossary#dao-design-pattern) to deal with that interation. From a Spring Boot perspective, it is common to add in a service layer to manage the different DAO related classed, typically called Repositories.
 
 ## Implementation
 
-Normally I would not draw a [Sequence Diagram](https://github.com/jvalentino/glossary#sequence-diagram), as I tend to only use them as either a teaching tool or for rervese engineering something which is so complex that I can't easily figure it out by looking at the code. The following diagram describes how every aspect of this system works at the endpoint and method level:
+Normally I would not draw a [Sequence Diagram](https://github.com/jvalentino/glossary#sequence-diagram), as I tend to only use them as either a teaching tool or for reverse engineering something which is so complex that I can't easily figure it out by looking at the code. The following diagram describes how every aspect of this system works at the endpoint and method level:
 
 ![01](./wiki/sequence.png)
 
 The important takeaway is the layering:
 
 - The browser's experience is the result of the various JSP files that have their HTML content generated server-side and then provided to that browser.
-- There is a framework layer that handles runing HTTP endpoints into individual method level calls in the various controller classes.
+- There is a framework layer that handles running HTTP endpoints into individual method level calls in the various controller classes.
 - Controllers invoke Service classes to perform the needed operations.
 - Services invoke Repositories classes in order to interact with the underyling database.
 - There is a framework that handles translating that Repository layer into actual database operations.
@@ -159,9 +159,9 @@ You launch the database container by running:
 docker compose up -d
 ```
 
-This sill execute the container in detetached mode, and leave it running in the background.
+This will execute the container in detached mode, and leave it running in the background.
 
-You then have to manually create a database name `examplesys`, which is most easilly done via pgadmin:
+You then have to manually create a database named `examplesys`, which is most easilly done via pgadmin:
 
 ![01](./wiki/create-db.png)
 
